@@ -54,17 +54,17 @@
         group: 'tablero-kanban',
         animation: 150,
         onEnd: function(evt) {
-          // 1. Capturamos los datos correctos
+          //Capturamos de datos
           let tareaId = evt.item.getAttribute('data-id');
           let nuevoEstado = evt.to.id;
 
-          // 2. Ejecutamos la llamada silenciosa al servidor
+          //Llamada AJAX para cambiar estado de la tarea
           $.ajax({
             url: 'index.php?action=updateEstado',
             method: 'POST',
             data: {
-              id: tareaId, // Usamos la variable definida arriba
-              estado: nuevoEstado // Usamos la variable definida arriba
+              id: tareaId,
+              estado: nuevoEstado
             },
             success: function(respuesta) {
               console.log("Servidor dice: " + respuesta);
