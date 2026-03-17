@@ -1,40 +1,46 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-ES">
+
 <head>
   <meta charset="utf-8">
   <title>Crear Nueva Tarea</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    textarea { width: 300px; height: 100px; }
-    .error { color: red; font-weight: bold; }
-  </style>
+  <link rel="stylesheet" href="../../Trello/css/style.css">
 </head>
-<body>
 
-<h1>Añadir Tarea al Tablero</h1>
+<body class="body-formulario">
 
-<!-- Si el controlador detecta un error (nombre vacío, etc.), lo muestra aquí -->
-<?php if (isset($error) && $error !== ''): ?>
-  <p class="error"><?php echo htmlspecialchars($error); ?></p>
-<?php endif; ?>
+  <div class="contenedor-formulario">
+    <div class="tarjeta-form shadow">
+      <h1>Añadir Nueva Tarea</h1>
 
-<form method="post" action="index.php?action=store">
-  <p>
-    <strong>Nombre de la tarea:</strong><br>
-    <input type="text" name="nombre" value="<?php echo isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : ''; ?>" placeholder="Ej: Comprar paparajotes">
-  </p>
-  
-  <p>
-    <strong>Descripción / Notas:</strong><br>
-    <textarea name="descripcion" placeholder="Detalles de la tarea..."><?php echo isset($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : ''; ?></textarea>
-  </p>
+      <?php if (isset($error) && $error !== ''): ?>
+        <div class="alerta-error">
+          ⚠️ <?php echo htmlspecialchars($error); ?>
+        </div>
+      <?php endif; ?>
 
-  <!-- El estado y el orden se asignan automáticamente en el modelo como 'pendiente' y '0' -->
-  
-  <button type="submit">Guardar en Pendientes</button>
-</form>
+      <form method="post" action="index.php?action=store">
+        <div class="campo">
+          <label>Nombre de la tarea</label>
+          <input type="text" name="nombre"
+            value="<?php echo isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : ''; ?>"
+            placeholder="Ej: Comprar paparajotes" required>
+        </div>
 
-<p><a href="index.php?action=index">← Volver al tablero</a></p>
+        <div class="campo">
+          <label>Descripción / Notas</label>
+          <textarea name="descripcion"
+            placeholder="Añade una descripción más detallada..."><?php echo isset($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : ''; ?></textarea>
+        </div>
+
+        <div class="acciones-form">
+          <button type="submit" class="btn-guardar">Guardar en Pendientes</button>
+          <a href="index.php?action=index" class="btn-cancelar">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
 
 </body>
+
 </html>

@@ -2,61 +2,64 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Editar Tarea</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    textarea { width: 300px; height: 80px; }
-    .error { color: red; }
-  </style>
+  <title>Editar Tarea | Trello</title>
+  <!-- Ruta al CSS (ajusta los ../ según tu estructura real) -->
+  <link rel="stylesheet" href="../../Trello/css/style.css">
 </head>
-<body>
+<body class="body-formulario">
 
-<h1>Editar Tarea</h1>
+<div class="contenedor-formulario">
+  <div class="tarjeta-form shadow">
+    <h1>📝 Editar Tarea</h1>
 
-<?php if (isset($error) && $error !== ''): ?>
-  <p class="error"><?php echo htmlspecialchars($error); ?></p>
-<?php endif; ?>
+    <?php if (isset($error) && $error !== ''): ?>
+      <div class="alerta-error">
+        ⚠️ <?php echo htmlspecialchars($error); ?>
+      </div>
+    <?php endif; ?>
 
-<form method="post" action="index.php?action=update">
-  <!-- ID Oculto para saber qué tarea actualizar -->
-  <input type="hidden" name="id" value="<?php echo (int)$tarea['id']; ?>">
+    <form method="post" action="index.php?action=update">
+      <!-- ID Oculto -->
+      <input type="hidden" name="id" value="<?php echo (int)$tarea['id']; ?>">
+      <!-- Orden Oculto -->
+      <input type="hidden" name="orden" value="<?php echo (int)$tarea['orden']; ?>">
 
-  <p>
-    <strong>Nombre:</strong><br>
-    <input type="text" name="nombre" value="<?php
-      echo isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : htmlspecialchars($tarea['nombre']);
-    ?>">
-  </p>
+      <div class="campo">
+        <label>Nombre de la tarea</label>
+        <input type="text" name="nombre" value="<?php
+          echo isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : htmlspecialchars($tarea['nombre']);
+        ?>" required>
+      </div>
 
-  <p>
-    <strong>Descripción:</strong><br>
-    <textarea name="descripcion"><?php
-      echo isset($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : htmlspecialchars($tarea['descripcion']);
-    ?></textarea>
-  </p>
+      <div class="campo">
+        <label>Descripción / Notas</label>
+        <textarea name="descripcion"><?php
+          echo isset($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : htmlspecialchars($tarea['descripcion']);
+        ?></textarea>
+      </div>
 
-  <p>
-    <strong>Estado actual:</strong><br>
-    <select name="estado">
-      <?php 
-        $estadoActual = isset($_POST['estado']) ? $_POST['estado'] : $tarea['estado'];
-        $opciones = ['pendiente', 'proceso', 'terminado'];
-        foreach ($opciones as $opcion):
-      ?>
-        <option value="<?php echo $opcion; ?>" <?php echo ($estadoActual == $opcion) ? 'selected' : ''; ?>>
-          <?php echo ucfirst($opcion); ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-  </p>
+      <div class="campo">
+        <label>Estado de la columna</label>
+        <select name="estado" class="select-trello">
+          <?php 
+            $estadoActual = isset($_POST['estado']) ? $_POST['estado'] : $tarea['estado'];
+            $opciones = ['pendiente', 'proceso', 'terminado'];
+            foreach ($opciones as $opcion):
+          ?>
+            <option value="<?php echo $opcion; ?>" <?php echo ($estadoActual == $opcion) ? 'selected' : ''; ?>>
+              <?php echo ucfirst($opcion); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-  <!-- Mantenemos el orden actual oculto para no perderlo al editar texto -->
-  <input type="hidden" name="orden" value="<?php echo (int)$tarea['orden']; ?>">
-
-  <button type="submit">Actualizar Tarea</button>
-</form>
-
-<p><a href="index.php?action=index">← Volver al tablero</a></p>
+      <div class="acciones-form">
+        <button type="submit" class="btn-guardar">Actualizar Tarea</button>
+        <a href="index.php?action=index" class="btn-cancelar">Volver al tablero</a>
+      </div>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>
