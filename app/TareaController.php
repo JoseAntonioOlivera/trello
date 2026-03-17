@@ -65,7 +65,7 @@ class TareaController
       $error = $e->getMessage();
       $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
       $tarea = Tarea::find($id);
-      
+
       require __DIR__ . '/views/tareas/edit.php';
     }
   }
@@ -81,5 +81,22 @@ class TareaController
     } catch (Exception $e) {
       echo "No se pudo borrar: " . $e->getMessage();
     }
+  }
+
+  public function updateEstado(): void
+  {
+    try {
+      $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+      $nuevoEstado = isset($_POST['estado']) ? (string)$_POST['estado'] : '';
+
+      $tarea = Tarea::find($id);
+      if ($tarea) {
+        Tarea::update($id, $tarea['nombre'], $tarea['descripcion'], $nuevoEstado, $tarea['orden']);
+        echo json_encode(['status' => 'success']);
+      }
+    } catch (Exception $e) {
+      echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    }
+    exit;
   }
 }

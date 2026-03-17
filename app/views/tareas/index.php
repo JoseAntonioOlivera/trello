@@ -31,28 +31,48 @@
 </head>
 
 <body>
+  <a href="index.php?action=create">Crear Nueva Tarea</a>
   <div class="contenedor" id="padre">
+
+    <!-- COLUMNA PENDIENTES -->
     <div class="columna" id="pendiente">
       <h3>Pendientes</h3>
-      <div class="tarea" data-id="<?php echo $t['id']; ?>">
-        <h3>Título de la tarea 1</h3>
-        <p>Texto de la tarea</p>
-      </div>
+      <?php foreach ($tareas as $t): ?>
+        <?php if ($t['estado'] === 'pendiente'): ?>
+          <div class="tarea" data-id="<?php echo $t['id']; ?>">
+            <h3><?php echo htmlspecialchars($t['nombre']); ?></h3>
+            <p><?php echo htmlspecialchars($t['descripcion']); ?></p>
+          </div>
+        <?php endif; ?>
+      <?php endforeach; ?>
     </div>
+
+    <!-- COLUMNA EN PROCESO -->
     <div class="columna" id="proceso">
       <h3>En proceso</h3>
-      <div class="tarea">
-        <h3>Título de la tarea 2</h3>
-        <p>Texto de la tarea</p>
-      </div>
+      <?php foreach ($tareas as $t): ?>
+        <?php if ($t['estado'] === 'proceso'): ?>
+          <div class="tarea" data-id="<?php echo $t['id']; ?>">
+            <h3><?php echo htmlspecialchars($t['nombre']); ?></h3>
+            <p><?php echo htmlspecialchars($t['descripcion']); ?></p>
+          </div>
+        <?php endif; ?>
+      <?php endforeach; ?>
     </div>
+
+    <!-- COLUMNA TERMINADAS -->
     <div class="columna" id="terminado">
       <h3>Terminadas</h3>
-      <div class="tarea">
-        <h3>Título de la tarea 3</h3>
-        <p>Texto de la tarea</p>
-      </div>
+      <?php foreach ($tareas as $t): ?>
+        <?php if ($t['estado'] === 'terminado'): ?>
+          <div class="tarea" data-id="<?php echo $t['id']; ?>">
+            <h3><?php echo htmlspecialchars($t['nombre']); ?></h3>
+            <p><?php echo htmlspecialchars($t['descripcion']); ?></p>
+          </div>
+        <?php endif; ?>
+      <?php endforeach; ?>
     </div>
+
   </div>
 </body>
 <script>
@@ -62,13 +82,29 @@
         group: 'tablero-kanban',
         animation: 150,
         onEnd: function(evt) {
+          // 1. Capturamos los datos correctos
           let tareaId = evt.item.getAttribute('data-id');
           let nuevoEstado = evt.to.id;
-          // TODO actualizar el estado en la BD
-        }
-      });
-    });
-  });
+
+          // 2. Ejecutamos la llamada silenciosa al servidor
+          $.ajax({
+            url: 'index.php?action=updateEstado',
+            method: 'POST',
+            data: {
+              id: tareaId, // Usamos la variable definida arriba
+              estado: nuevoEstado // Usamos la variable definida arriba
+            },
+            success: function(respuesta) {
+              console.log("Servidor dice: " + respuesta);
+            },
+            error: function() {
+              console.log("Error al conectar con el servidor");
+            }
+          });
+        } // Fin onEnd
+      }); // Fin new Sortable
+    }); // Fin forEach
+  }); // Fin ready
 </script>
 
 </html>
