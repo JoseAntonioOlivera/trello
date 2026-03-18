@@ -104,15 +104,3 @@ function pintarTarea($t)
 <?php
 }
 ?>
-
-
-
-
-<!-- CREATE TABLE tareas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    estado ENUM('pendiente', 'proceso', 'terminado') DEFAULT 'pendiente',
-    orden INT DEFAULT 0, -- Para guardar la posición dentro de la columna
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-); -->
