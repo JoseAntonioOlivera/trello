@@ -3,8 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Crear Nueva Tarea</title>
-  <link rel="stylesheet" href="../../Trello/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body class="body-formulario">
