@@ -1,12 +1,15 @@
 <?php
-// Parseamos la URL de la base de datos de Render
-$dbUrl = parse_url(getenv('postgresql://olivera:xZopBO4FwXBgcKa0C5YHHXJIRWUdaCNM@dpg-d6tb93tm5p6s73b9dmag-a/trello_db_de3j'));
+// En Render usamos la variable que ellos nos dan
+$databaseUrl = getenv('DATABASE_URL');
+$dbUrl = $databaseUrl ? parse_url($databaseUrl) : [];
 
 return [
+  // Si hay DATABASE_URL usamos pgsql (Render), si no, mysql (Local)
+  'driver'  => $databaseUrl ? 'pgsql' : 'mysql', 
   'host'    => $dbUrl['host'] ?? 'localhost',
-  'db'      => 'trello_db',
-  'user'    => 'olivera',
-  'pass'    => 'xZopBO4FwXBgcKa0C5YHHXJIRWUdaCNM',
+  'db'      => isset($dbUrl['path']) ? ltrim($dbUrl['path'], '/') : 'nombre_tu_bd_local',
+  'user'    => $dbUrl['user'] ?? 'root',
+  'pass'    => $dbUrl['pass'] ?? '',
   'port'    => $dbUrl['port'] ?? '5432',
   'charset' => 'utf8',
 ];
