@@ -1,115 +1,204 @@
-/* Configuración General */
+/* --- BASE ORIGINAL --- */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f5f7;
+    background-color: #0079bf;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 20px;
+    min-height: 100vh; /* Cambiado a min-height para evitar cortes en móvil */
+    box-sizing: border-box;
 }
 
 .titulo-tablero {
-    text-align: center;
-    color: #172b4d;
-    margin-bottom: 20px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 10px 0 20px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
-/* Contenedor Principal (Layout Desktop) */
-.contenedor {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    overflow-x: auto; /* Permite scroll horizontal si hay muchas columnas */
-    padding-bottom: 20px;
-}
-
-/* Columnas */
-.columna {
-    background-color: #ebecf0;
-    border-radius: 8px;
-    min-width: 300px;
-    max-width: 300px;
-    min-height: 200px;
-    padding: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-}
-
-.columna h3 {
-    font-size: 1.1rem;
-    color: #5e6c84;
-    padding-left: 5px;
-}
-
-/* Tareas Individuales */
-.tarea {
-    background-color: white;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 10px;
-    box-shadow: 0 1px 0 rgba(9,30,66,.25);
-    cursor: grab;
-}
-
-.tarea h3 {
-    margin: 0 0 5px 0;
-    font-size: 1rem;
-    color: #172b4d;
-}
-
-.tarea p {
-    font-size: 0.9rem;
-    color: #444;
-    margin: 0;
-}
-
-.acciones {
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-/* Botón Crear Tarea */
 .crearTarea {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    margin-bottom: 25px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .btn-trello {
-    background-color: #0079bf;
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
-    padding: 12px 20px;
-    border-radius: 50px;
+    padding: 10px 20px;
+    border-radius: 5px;
     text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* --- RESPONSIVE (Móviles y Tablets) --- */
+.btn-trello:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    color: white;
+}
+
+/* --- CONTENEDOR Y COLUMNAS --- */
+.contenedor {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    align-items: flex-start;
+    /* Permite scroll horizontal suave en tablets antes de pasar a vertical */
+    overflow-x: auto; 
+    padding-bottom: 15px;
+}
+
+.columna {
+    flex: 1;
+    background-color: #ebedf0;
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 150px;
+    min-width: 280px; /* Evita que las columnas se compriman demasiado */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.columna h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 5px 10px 15px;
+    color: #172b4d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- TAREAS --- */
+.tarea {
+    cursor: grab;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.tarea h3 {
+    font-size: 15px;
+    margin: 0 0 8px 0;
+    color: #172b4d;
+    text-transform: none;
+}
+
+.tarea p {
+    font-size: 14px;
+    color: #5e6c84;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+
+.acciones button, .acciones a {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 0;
+}
+
+.sortable-ghost {
+    opacity: 0.3;
+    background: #cbd2d9 !important;
+}
+
+/* --- FORMULARIOS --- */
+.body-formulario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0079bf;
+}
+
+.contenedor-formulario {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.tarjeta-form {
+    background: #ebedf0;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.campo input, .campo textarea, .select-trello {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #dfe1e6;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.btn-guardar {
+    background-color: #5aac44;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* --- RESPONSIVE (MÓVIL) --- */
 @media (max-width: 768px) {
-    .contenedor {
-        flex-direction: column; /* Columnas una debajo de otra */
-        align-items: center;
-    }
-
-    .columna {
-        width: 100%; /* Ocupan todo el ancho disponible */
-        max-width: 100%;
-        min-width: unset;
-    }
-
     body {
         padding: 10px;
     }
-    
-    .crearTarea {
-        width: calc(100% - 40px);
-        left: 20px;
+
+    .titulo-tablero {
+        font-size: 1.2rem;
+        text-align: center;
     }
-    
-    .btn-trello {
+
+    .crearTarea {
         justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .contenedor {
+        flex-direction: column; /* Cambia a vertical */
+        overflow-x: hidden;
+        gap: 20px;
+    }
+
+    .columna {
+        width: 100%;
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn-trello {
+        width: 100%; /* Botón ancho en móvil */
+        justify-content: center;
+    }
+
+    .tarjeta-form {
+        padding: 20px;
     }
 }
