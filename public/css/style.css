@@ -1,13 +1,14 @@
-/* --- BASE ORIGINAL --- */
+/* --- BASE GENERAL --- */
 body {
     background-color: #0079bf;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    min-height: 100vh; /* Cambiado a min-height para evitar cortes en móvil */
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
+/* --- ELEMENTOS DEL TABLERO --- */
 .titulo-tablero {
     color: white;
     font-size: 1.5rem;
@@ -51,7 +52,6 @@ body {
     gap: 15px;
     width: 100%;
     align-items: flex-start;
-    /* Permite scroll horizontal suave en tablets antes de pasar a vertical */
     overflow-x: auto; 
     padding-bottom: 15px;
 }
@@ -62,7 +62,7 @@ body {
     border-radius: 10px;
     padding: 12px;
     min-height: 150px;
-    min-width: 280px; /* Evita que las columnas se compriman demasiado */
+    min-width: 280px; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
@@ -129,12 +129,12 @@ body {
     align-items: center;
     min-height: 100vh;
     background-color: #0079bf;
+    padding: 15px; /* Evita que el formulario toque los bordes en móviles */
 }
 
 .contenedor-formulario {
     width: 100%;
     max-width: 500px;
-    padding: 20px;
 }
 
 .tarjeta-form {
@@ -142,16 +142,50 @@ body {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-sizing: border-box;
 }
 
-.campo input, .campo textarea, .select-trello {
+.tarjeta-form h1 {
+    font-size: 20px;
+    color: #172b4d;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.campo {
+    margin-bottom: 20px;
+}
+
+.campo label {
+    display: block;
+    font-weight: 600;
+    color: #5e6c84;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.campo input, 
+.campo textarea, 
+.select-trello {
     width: 100%;
     padding: 12px;
     border: 2px solid #dfe1e6;
     border-radius: 5px;
     font-size: 16px;
     background: #fff;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Fundamental para que el padding no rompa el ancho */
+    transition: border-color 0.2s;
+}
+
+.campo textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.acciones-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .btn-guardar {
@@ -163,9 +197,22 @@ body {
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-/* --- RESPONSIVE (MÓVIL) --- */
+.btn-guardar:hover {
+    background-color: #519839;
+}
+
+.btn-cancelar {
+    text-align: center;
+    text-decoration: none;
+    color: #5e6c84;
+    font-size: 14px;
+    padding: 5px;
+}
+
+/* --- RESPONSIVE (MÓVIL / TABLET) --- */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -182,7 +229,7 @@ body {
     }
 
     .contenedor {
-        flex-direction: column; /* Cambia a vertical */
+        flex-direction: column; /* Apila las columnas verticalmente */
         overflow-x: hidden;
         gap: 20px;
     }
@@ -194,11 +241,22 @@ body {
     }
 
     .btn-trello {
-        width: 100%; /* Botón ancho en móvil */
+        width: 100%; 
         justify-content: center;
     }
 
     .tarjeta-form {
         padding: 20px;
+    }
+}
+
+/* Ajustes finos para teléfonos pequeños */
+@media (max-width: 480px) {
+    .tarjeta-form h1 {
+        font-size: 18px;
+    }
+    
+    .btn-guardar {
+        padding: 15px; /* Botón más grande para dedo */
     }
 }
