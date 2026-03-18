@@ -1,5 +1,7 @@
 FROM php:8.2-apache
-# Copia los archivos de tu proyecto al directorio del servidor
+
+# Instala las extensiones necesarias para MySQL
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
 COPY . /var/www/html/
-# Expone el puerto 80
 EXPOSE 80
