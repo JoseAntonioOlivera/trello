@@ -5,10 +5,10 @@ class Tarea
 {
   public static function all(): array
   {
-    // Ordenamos por el campo 'orden' para que el tablero se vea bien
     $sql = "SELECT id, nombre, descripcion, estado, orden, fecha_creacion FROM tareas ORDER BY orden ASC";
     $stmt = Database::pdo()->query($sql);
-    return $stmt->fetchAll();
+    // En Postgres es buena práctica especificar FETCH_ASSOC
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public static function find(int $id): ?array
@@ -17,7 +17,7 @@ class Tarea
     $stmt = Database::pdo()->prepare($sql);
     $stmt->execute([':id' => $id]);
 
-    $row = $stmt->fetch();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row ? $row : null;
   }
 
@@ -28,7 +28,7 @@ class Tarea
       throw new Exception("El nombre de la tarea es obligatorio.");
     }
 
-    // Insertamos con estado 'pendiente' por defecto y orden 0
+    // El SQL es idéntico a MySQL
     $sql = "INSERT INTO tareas (nombre, descripcion, estado, orden) VALUES (:nombre, :descripcion, 'pendiente', 0)";
     $stmt = Database::pdo()->prepare($sql);
     $stmt->execute([

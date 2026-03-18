@@ -2,33 +2,43 @@
 
 class Database
 {
-  public static function pdo(): PDO
-  {
-    // “static” guarda el valor entre llamadas a esta función
-    static $pdo = null;
+    private static $pdo = null;
 
-    // Si ya existe la conexión, la devolvemos
-    if ($pdo !== null) {
-      return $pdo;
+    public static function pdo()
+    {
+        if (self::$pdo === null) {
+            // 1. Obtenemos la URL de Render (DATABASE_URL)
+            $dbUrl = getenv('DATABASE_URL');
+
+            if ($dbUrl) {
+                // 2. Si estamos en Render, parseamos la URL de Postgres
+                $conn = parse_url($dbUrl);
+
+                $host = $conn['host'];
+                $port = $conn['port'];
+                $user = $conn['user'];
+                $pass = $conn['pass'];
+                $dbname = ltrim($conn['path'], '/');
+
+                // 3. Cambiamos el DSN a "pgsql"
+                $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+            } else {
+                // Configuración local por si trabajas en tu PC (ajusta según necesites)
+                $dsn = "mysql:host=localhost;dbname=trello;charset=utf8mb4";
+                $user = 'root';
+                $pass = '';
+            }
+
+            try {
+                self::$pdo = new PDO($dsn, $user, $pass, [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                ]);
+            } catch (PDOException $e) {
+                die("Error de conexión: " . $e->getMessage());
+            }
+        }
+
+        return self::$pdo;
     }
-
-    // Cargamos el array de configuración
-    $c = require __DIR__ . '/../config/config.php';
-
-    // Creamos el DSN (cadena de conexión)
-    $dsn = "mysql:host=" . $c['host'] . ";dbname=" . $c['db'] . ";charset=" . $c['charset'];
-
-    // Creamos PDO (la conexión)
-    $pdo = new PDO($dsn, $c['user'], $c['pass']);
-
-    // Si hay un error en SQL, PDO lanzará una excepción
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Al hacer fetch(), queremos arrays asociativos (['columna' => valor])
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-    return $pdo;
-  }
 }
-
-?>

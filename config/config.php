@@ -4,7 +4,7 @@ $dbUrl = parse_url(getenv('postgresql://olivera:xZopBO4FwXBgcKa0C5YHHXJIRWUdaCNM
 
 return [
   'host'    => $dbUrl['host'] ?? 'localhost',
-  'db'      => ltrim($dbUrl['path'], '/') ?? 'trello',
+  'db'      => 'trello_db',
   'user'    => 'olivera',
   'pass'    => 'xZopBO4FwXBgcKa0C5YHHXJIRWUdaCNM',
   'port'    => $dbUrl['port'] ?? '5432',
