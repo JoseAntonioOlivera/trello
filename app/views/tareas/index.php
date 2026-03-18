@@ -5,20 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestor de tareas</title>
-  <link rel="stylesheet" href="../../Trello/css/style.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
 
-<body>  
-   <h1 class="titulo-tablero">Mi Tablero de Tareas</h1>
+<body>
+  <h1 class="titulo-tablero">Mi Tablero de Tareas</h1>
   <div class="contenedor" id="padre">
 
     <!-- COLUMNA PENDIENTES -->
     <div class="columna" id="pendiente">
       <h3>Pendientes</h3>
       <?php foreach ($tareas as $t): ?>
-         <?php if ($t['estado'] === 'pendiente') pintarTarea($t); ?>
+        <?php if ($t['estado'] === 'pendiente') pintarTarea($t); ?>
       <?php endforeach; ?>
     </div>
 
@@ -42,9 +44,9 @@
 
   <div class="crearTarea">
     <a href="index.php?action=create" class="btn-trello">
-        <span>+</span> Añadir una tarea
+      <span>+</span> Añadir una tarea
     </a>
-</div>
+  </div>
 
 </body>
 <script>
@@ -82,23 +84,24 @@
 </html>
 
 <?php
-function pintarTarea($t) {
-    ?>
-    <div class="tarea" data-id="<?= $t['id'] ?>">
-        <h3><?= htmlspecialchars($t['nombre']) ?></h3>
-        <p><?= htmlspecialchars($t['descripcion']) ?></p>
+function pintarTarea($t)
+{
+?>
+  <div class="tarea" data-id="<?= $t['id'] ?>">
+    <h3><?= htmlspecialchars($t['nombre']) ?></h3>
+    <p><?= htmlspecialchars($t['descripcion']) ?></p>
 
-        <div class="acciones">
-            <form action="index.php?action=delete" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?');">
-                <input type="hidden" name="id" value="<?= $t['id'] ?>">
-                <button type="submit" style="border:none; background:none; cursor:pointer; font-size: 1.2rem;" title="Eliminar">🗑️</button>
-            </form>
-            <a href="index.php?action=edit&id=<?= $t['id'] ?>" style="text-decoration:none;" title="Editar">
-                <span style="font-size: 1.2rem;">📝</span>
-            </a>
-        </div>
+    <div class="acciones">
+      <form action="index.php?action=delete" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?');">
+        <input type="hidden" name="id" value="<?= $t['id'] ?>">
+        <button type="submit" style="border:none; background:none; cursor:pointer; font-size: 1.2rem;" title="Eliminar">🗑️</button>
+      </form>
+      <a href="index.php?action=edit&id=<?= $t['id'] ?>" style="text-decoration:none;" title="Editar">
+        <span style="font-size: 1.2rem;">📝</span>
+      </a>
     </div>
-    <?php
+  </div>
+<?php
 }
 ?>
 
