@@ -2,7 +2,7 @@
 return [
   'host' => 'localhost',
   'db' => 'trello',
-  'user' => 'root',
-  'pass' => '',
+  'user' => 'usuario_web',
+  'pass' => 'clave_segura',
   'charset' => 'utf8mb4',
 ];

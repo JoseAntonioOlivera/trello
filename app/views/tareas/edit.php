@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Editar Tarea | Trello</title>
   <!-- Ruta al CSS (ajusta los ../ según tu estructura real) -->
-  <link rel="stylesheet" href="../../Trello/css/style.css">
+  <link rel="stylesheet" href="/trello/css/style.css">
 </head>
 <body class="body-formulario">
 
